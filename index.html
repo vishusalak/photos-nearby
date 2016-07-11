@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Photo Near You</title>
+
+
+    <base href = "/">
+
+    <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+
+
+</head>
+
+<body ng-app = "app" ng-controller = "mainController">
+
+
+    <!-- USELESS NAVBAR -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href>Photos Near Me</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href>Home</a></li>
+                    <li><a href>About</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- MAIN CONTENT-->
+
+    <div class="container-fluid" id = "content">
+
+        <div class="row">
+            <!-- -----INSTAGRAM IMAGES---- -->
+
+             <div class="col-md-6">
+                 <!--Previous CODE -->
+                 <!--<div class="row">-->
+                     <!--<div class="col-md-12">-->
+                         <input class="form-control" placeholder="Search for Locations (eg. Vasant Kunj, New Delhi, Delhi, India)" ng-show="false" ng-model="chosenPlace" googleplace/>
+                     <!--</div>-->
+                 <!--</div>-->
+                 <div class="row ig-photos">
+
+
+
+
+
+                         <h3 class="col-md-12">
+                             <span ng-if="chosenPlace && media[0]">Photos Near " {{chosenPlace}} " !</span>
+                             <span ng-if = "!media[0] && chosenPlace">Sorry No Images Found Near "{{chosenPlace}}" ! </span>
+                             <span ng-if = "!media[0] && !chosenPlace">Please Drag the Pointer to a location!</span>
+                         </h3>
+
+                         <div ng-if = "loadingImages" class="loading">
+                             Loading....
+                         </div>
+
+                         <div class="col-sm-6 col-md-4" ng-repeat="photo in media">
+                             <div class="thumbnail">
+                                 <img ng-src="{{photo.images.standard_resolution.url}}" alt="...">
+                                 <div class="caption">
+                                     <p><span ng-repeat="tag in photo.tags">#{{tag}}</span></p>
+                                     <p>Posted By {{photo.user.full_name}}</p>
+                                 </div>
+                             </div>
+                         </div>
+
+                 </div>
+
+
+             </div>
+
+            <!-- Google MAP-->
+             <div class="col-md-6">
+                 <div id="map"></div>
+             </div>
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+<!--3rd party Libraries-->
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="node_modules/angular/angular.min.js"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCGxc1R2iqgqbH8aChInIz98nfvW9ZO0WI&libraries=places&sensor=false"></script>
+
+
+<!--App JS files-->
+<script src="app/config/app.js"></script>                               <!-- CONFIGURATION FILE -->
+<script src="app/controllers/mainController.js"></script>               <!-- CONTAINS CONTROLLER HANDLING HOMEPAGE VIEW -->
+<script src="app/services/apiService.js"></script>                      <!-- CONTAINS APIS -->
+<script src="app/directives/googleMapDirective.js"></script>            <!-- GOOGLE MAP JAVASCRIPT CODE-->
+
+</body>
+</html>
